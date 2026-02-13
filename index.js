@@ -131,6 +131,7 @@ app.delete("/artworks/:id", async (req, res) => {
   }
 });
 
+
 // home page card
 
 app.get("/artworks/featuredArtworks", async (req, res) => {
