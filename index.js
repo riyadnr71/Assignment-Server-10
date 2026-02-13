@@ -81,6 +81,7 @@ app.patch("/artworks/:id", async (req, res) => {
   }
 });
 
+
     // DELETE artwork
 app.delete("/artworks/:id", async (req, res) => {
   try {
