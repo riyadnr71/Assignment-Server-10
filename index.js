@@ -7,16 +7,15 @@ require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Middleware
+
 app.use(cors());
 app.use(express.json());
 
-// MongoDB connection
+
 const uri = process.env.MONGO_URI;
 const client = new MongoClient(uri, {
   serverApi: { version: ServerApiVersion.v1 },
 });
-
 async function run() {
   try {
     await client.connect();
@@ -27,7 +26,6 @@ async function run() {
     const artworksCollection = db.collection("artworks");
     const favoritesCollection = db.collection("favorites");
 
-    // Test route
     app.get("/", (req, res) => {
       res.send("Server is running!");
     });
@@ -44,7 +42,6 @@ app.get("/artist-profile/:email", async (req, res) => {
 
   res.send(artworks);
 });
-
 
     // GET all artworks
     app.get("/artworks", async (req, res) => {
@@ -84,10 +81,6 @@ app.patch("/artworks/:id", async (req, res) => {
   }
 });
 
-
-
-
-
     // DELETE artwork
 app.delete("/artworks/:id", async (req, res) => {
   try {
@@ -115,7 +108,6 @@ app.delete("/artworks/:id", async (req, res) => {
         res.status(500).send({ error: err.message });
       }
     });
-
 
 // MyGallery
   app.get("/my-artworks", async (req, res) => {
@@ -169,7 +161,7 @@ app.get("/top-artists", async (req, res) => {
         },
       },
       { $sort: { totalLikes: -1 } }, // Most liked first
-      { $limit: 5 }, // Top 5 artists
+      { $limit: 4 }, // Top 5 artists
     ];
 
     const topArtists = await collection.aggregate(pipeline).toArray();
@@ -184,7 +176,7 @@ app.get("/top-artists", async (req, res) => {
 app.get("/trending-artworks", async (req, res) => {
   try {
     const artworks = await collection
-      .find({}) // public artworks হলে filter করতে পারো
+      .find({}) 
       .sort({ likes: -1 })
       .limit(3)
       .toArray();
@@ -251,6 +243,7 @@ app.post("/favorites", async (req, res) => {
       userEmail,
       title,
       image,
+      artistName
      
     });
 
