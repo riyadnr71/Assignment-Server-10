@@ -97,6 +97,7 @@ app.delete("/artworks/:id", async (req, res) => {
   }
 });
 
+
     // GET artwork by id
     app.get("/artworks/:id", async (req, res) => {
       try {
